@@ -26,17 +26,13 @@ struct segment_tree {
         return (i << 1) | 1;
     }
 
-    int get_div(int a) {
-        if (a == 0)
-            return 1;
-        if (a < 0)
-            return -a;
-        return a;
+    int solve(int a) {
+        return (!a) ? 0 : (a > 0) ? 1 : -1;
     }
 
     void build(vector<int> &a, int i, int tl, int tr) {
         if (tl == tr) {
-            tree[i] = a[tl] / get_div(a[tl]);
+            tree[i] = solve(a[tl]);
         } else {
             int tm = (tl + tr) >> 1;
             build(a, left(i), tl, tm);
@@ -64,7 +60,7 @@ struct segment_tree {
 
     void update(int pos, int new_val, int i, int tl, int tr) {
         if (tl == tr) {
-            tree[i] = new_val / get_div(new_val);
+            tree[i] = solve(new_val);
         } else {
             int tm = (tl + tr) >> 1;
             if (pos <= tm)
